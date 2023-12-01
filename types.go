@@ -730,6 +730,7 @@ type MessageEntity struct {
 	//  “pre” (monowidth block),
 	//  “text_link” (for clickable text URLs),
 	//  “text_mention” (for users without usernames)
+	//  "custom_emoji" (custom emoji)
 	Type string `json:"type"`
 	// Offset in UTF-16 code units to the start of the entity
 	Offset int `json:"offset"`
@@ -747,6 +748,10 @@ type MessageEntity struct {
 	//
 	// optional
 	Language string `json:"language,omitempty"`
+	// Custom Emoji ID
+	//
+	// optional
+	CustomEmojiID string `json:"custom_emoji_id,omitempty"`
 }
 
 // ParseURL attempts to parse a URL contained within a MessageEntity.
@@ -812,6 +817,11 @@ func (e MessageEntity) IsPre() bool {
 // IsTextLink returns true if the type of the message entity is "text_link" (clickable text URL).
 func (e MessageEntity) IsTextLink() bool {
 	return e.Type == "text_link"
+}
+
+// IsDocumentID returns true if the type of the message entity is "text_link" (clickable text URL).
+func (e MessageEntity) IsCustomEmoji() bool {
+	return e.Type == "custom_emoji"
 }
 
 // PhotoSize represents one size of a photo or a file / sticker thumbnail.
