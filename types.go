@@ -241,6 +241,8 @@ func (u *User) String() string {
 
 // Chat represents a chat.
 type Chat struct {
+	// NEW
+	IsForum bool `json:"is_forum"`
 	// ID is a unique identifier for this chat
 	ID int64 `json:"id"`
 	// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
@@ -357,8 +359,20 @@ func (c Chat) ChatConfig() ChatConfig {
 	return ChatConfig{ChatID: c.ID}
 }
 
+type ForumTopicCreated struct {
+	Name              string `json:"name"`
+	IconColor         int    `json:"icon_color"`
+	IconCustomEmojiID string `json:"icon_custom_emoji_id"`
+}
+
 // Message represents a message.
 type Message struct {
+	// NEW
+	MessageThreadID int  `json:"message_thread_id"`
+	IsTopicMessage  bool `json:"is_topic_message"`
+
+	ForumTopicCreated *ForumTopicCreated `json:"forum_topic_created"`
+
 	// MessageID is a unique message identifier inside this chat
 	MessageID int `json:"message_id"`
 	// From is a sender, empty for messages sent to channels;
